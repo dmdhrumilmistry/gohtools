@@ -1,5 +1,5 @@
 build:
-	@go build -o ./bin/gohtools
+	@go build -ldflags "-w -s" -o ./bin/gohtools
 
 run: build
 	@./bin/gohtools
