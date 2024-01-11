@@ -10,7 +10,7 @@ type Foo struct {
 	Baz string
 }
 
-func main() {
+func test() {
 	f := Foo{"Bar", "Bax"}
 	d, _ := json.Marshal(f)
 	fmt.Println(string(d))

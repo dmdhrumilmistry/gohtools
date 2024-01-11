@@ -43,12 +43,12 @@ func (s *Scanner) TestAllConnections(network string) {
 	}
 }
 
-func main() {
+func StartScanner(startPort int, endPort int, host string, timeout int) {
 	scanner := Scanner{
-		startPort: 1,
-		endPort:   1024,
-		host:      "scanme.nmap.org",
-		timeout:   2,
+		startPort: startPort,
+		endPort:   endPort,
+		host:      host,
+		timeout:   uint(timeout),
 	}
 	scanner.TestAllConnections("tcp")
 	// scanner.TestAllConnections("udp")
