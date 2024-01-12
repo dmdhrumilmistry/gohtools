@@ -20,7 +20,7 @@ func worker(ports, results chan int) {
 	}
 }
 
-func main() {
+func StartWorkerScanner() {
 	workers := flag.Int("w", 100, "Number of workers")
 	flag.Parse()
 
