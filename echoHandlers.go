@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"io"
 	"log"
 	"net"
@@ -55,31 +54,5 @@ func IoCopyHandler(conn net.Conn) {
 
 	if _, err := io.Copy(conn, conn); err != nil {
 		log.Fatalf("[!] Unable to read/write data due to error: %s\n", err)
-	}
-}
-
-func StartEchoServer(port int, handler string) {
-	addr := fmt.Sprintf("0.0.0.0:%d", port)
-	listener, err := net.Listen("tcp", addr)
-	if err != nil {
-		log.Fatalf("[!] Cannot bind port due to error: %s\n", err)
-	}
-	log.Printf("[*] Listening on %s\n", addr)
-
-	for {
-		conn, err := listener.Accept()
-		log.Printf("[*] Received connection from %s", conn.RemoteAddr().String())
-		if err != nil {
-			log.Printf("[!] Unable to accept connection due to error: %s", err)
-		}
-
-		switch handler {
-		case "buffioEcho":
-			go BuffioEchoHandler(conn)
-		case "ioCopyEcho":
-			go IoCopyHandler(conn)
-		default:
-			go EchoHandler(conn)
-		}
 	}
 }
