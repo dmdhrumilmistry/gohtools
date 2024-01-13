@@ -1,7 +1,7 @@
-package main
+package http
 
 import (
-	"fmt"
+	"encoding/json"
 	"io"
 	"log"
 	"net/http"
@@ -60,18 +60,15 @@ func (c *ApiClient) Delete(url string) []byte {
 	return c.MethodHandlerBodyExtractor("DELETE", url, nil)
 }
 
-func main() {
+func GetHostMachinePublicIP() string {
 	var res []byte
-	client := NewApiClient()
-	URL := "https://example.com/robots.txt"
+	var jsonRes map[string]interface{}
 
-	form := url.Values{}
-	form.Add("test", "true")
+	// AlternateNoisyMethod: json.NewDecoder(strings.NewReader(string(res))).Decode(&jsonRes)
+	res = NewApiClient().Get("https://ipinfo.io")
+	if err := json.Unmarshal(res, &jsonRes); err != nil {
+		log.Printf("[Error] Occurred while unmarshalling json: %s", err)
+	}
 
-	res = client.Get(URL)
-	// res = client.Put(URL, form)
-	// res = client.Patch(URL, form)
-	// res = client.Post(URL, "application/x-www-form-urlencoded", form)
-	// res = client.Delete(URL)
-	fmt.Println(string(res))
+	return jsonRes["ip"].(string)
 }
