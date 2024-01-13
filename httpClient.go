@@ -16,7 +16,7 @@ func NewApiClient() *ApiClient {
 	return &ApiClient{}
 }
 
-func (c *ApiClient) MethodHandler(method string, url string, form url.Values) []byte {
+func (c *ApiClient) MethodHandlerBodyExtractor(method string, url string, form url.Values) []byte {
 	var client http.Client
 	method = strings.ToUpper(method)
 	req, err := http.NewRequest(method, url, strings.NewReader(form.Encode()))
@@ -41,23 +41,23 @@ func (c *ApiClient) MethodHandler(method string, url string, form url.Values) []
 }
 
 func (c *ApiClient) Get(url string) []byte {
-	return c.MethodHandler("GET", url, nil)
+	return c.MethodHandlerBodyExtractor("GET", url, nil)
 }
 
 func (c *ApiClient) Post(url string, form url.Values) []byte {
-	return c.MethodHandler("POST", url, form)
+	return c.MethodHandlerBodyExtractor("POST", url, form)
 }
 
 func (c *ApiClient) Put(url string, form url.Values) []byte {
-	return c.MethodHandler("PUT", url, form)
+	return c.MethodHandlerBodyExtractor("PUT", url, form)
 }
 
 func (c *ApiClient) Patch(url string, form url.Values) []byte {
-	return c.MethodHandler("PATCH", url, form)
+	return c.MethodHandlerBodyExtractor("PATCH", url, form)
 }
 
 func (c *ApiClient) Delete(url string) []byte {
-	return c.MethodHandler("DELETE", url, nil)
+	return c.MethodHandlerBodyExtractor("DELETE", url, nil)
 }
 
 func main() {
