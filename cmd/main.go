@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 
@@ -23,9 +24,27 @@ func main() {
 	msfUsername := os.Getenv("MSF_USERNAME")
 	msfPassword := os.Getenv("MSF_PASSWORD")
 
-	msf := metasploit.NewMsfClient(msfHost, msfUsername, msfPassword)
-	if err := msf.Login(); err != nil {
-		log.Fatalln("[!] Failed to log in!")
+	if msfHost == "" || msfPassword == "" || msfUsername == "" {
+		log.Fatalln("[ERROR] Required environment variables (MSF_HOST, MSF_USERNAME, MSF_PASSWORD) not found!")
 	}
-	log.Printf("[INFO] MSF RPC TOKEN: %s\n", msf.Token)
+
+	msf, err := metasploit.NewMsfClient(msfHost, msfUsername, msfPassword)
+	if err != nil {
+		log.Fatalf("[ERROR] Unable to create MSF client due to error: %s", err)
+	}
+	defer msf.Logout()
+
+	sessions, err := msf.ListSessions()
+	if err != nil {
+		log.Panicf("[ERROR] Unable to list MSF sessions due to error: %s", err)
+	}
+
+	if len(sessions) < 1 {
+		fmt.Println("[*] No active sessions found!")
+	} else {
+		fmt.Println("Sessions:")
+		for _, session := range sessions {
+			fmt.Printf("%5d\t%s\n", session.Id, session.Info)
+		}
+	}
 }

@@ -10,32 +10,6 @@ import (
 	"gopkg.in/vmihailenco/msgpack.v2"
 )
 
-type loginReq struct {
-	_msgpack struct{} `msgpack:",asArray"`
-	Method   string
-	Username string
-	Password string
-}
-
-type loginRes struct {
-	Result       string `msgpack:"result"`
-	Token        string `msgpack:"token"`
-	Error        bool   `msgpack:"error"`
-	ErrorClass   string `msgpack:"error_class"`
-	ErrorMessage string `msgpack:"error_message"`
-}
-
-type logoutReq struct {
-	_msgpack    struct{} `msgpack:",asArray"`
-	Method      string
-	Token       string
-	LogoutToken string
-}
-
-type logoutRes struct {
-	Result string `msgpack:"result"`
-}
-
 type MsfClient struct {
 	Host     string
 	Username string
@@ -43,8 +17,15 @@ type MsfClient struct {
 	Token    string
 }
 
-func NewMsfClient(host, user, pass string) *MsfClient {
-	return &MsfClient{Host: host, Username: user, Password: pass}
+func NewMsfClient(host, user, pass string) (*MsfClient, error) {
+	msf := &MsfClient{Host: host, Username: user, Password: pass}
+
+	if err := msf.Login(); err != nil {
+		log.Fatalln("[!] Failed to log in!")
+		return nil, err
+	}
+
+	return msf, nil
 }
 
 func (c *MsfClient) Send(msgReq interface{}, msgRes interface{}) error {
@@ -101,4 +82,20 @@ func (c *MsfClient) Logout() error {
 
 	c.Token = ""
 	return nil
+}
+
+func (c *MsfClient) ListSessions() (map[uint32]sessionListRes, error) {
+	var res map[uint32]sessionListRes
+	ctx := &sessionListReq{
+		Method: "session.list",
+		Token:  c.Token,
+	}
+
+	err := c.Send(&ctx, &res)
+	if err != nil {
+		log.Printf("[MSF-CLIENT-ERROR] List sessions request failed due to error: %s\n", err)
+		return nil, err
+	}
+
+	return res, nil
 }
