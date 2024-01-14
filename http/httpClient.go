@@ -20,10 +20,13 @@ func (c *ApiClient) MethodHandlerBodyExtractor(method string, url string, form u
 	var client http.Client
 	method = strings.ToUpper(method)
 	req, err := http.NewRequest(method, url, strings.NewReader(form.Encode()))
+	req.Header.Add("User-Agent", "gohtools")
+
 	if err != nil {
 		log.Printf("[ERROR] Error while creating HTTP request: %s", err)
 		return nil
 	}
+
 	res, err := client.Do(req)
 	if err != nil {
 		log.Printf("[ERROR] Error occurred sending %s request %s: %s\n", method, url, err)
