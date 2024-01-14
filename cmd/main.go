@@ -2,10 +2,8 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"os"
 
-	"github.com/dmdhrumilmistry/gohtools/metasploit"
+	"github.com/dmdhrumilmistry/gohtools/bing"
 )
 
 func main() {
@@ -20,31 +18,50 @@ func main() {
 	// fmt.Printf("[*] Host Machine Public Ip: %s\n", ip)
 
 	// msf login
-	msfHost := os.Getenv("MSF_HOST")
-	msfUsername := os.Getenv("MSF_USERNAME")
-	msfPassword := os.Getenv("MSF_PASSWORD")
+	// msfHost := os.Getenv("MSF_HOST")
+	// msfUsername := os.Getenv("MSF_USERNAME")
+	// msfPassword := os.Getenv("MSF_PASSWORD")
 
-	if msfHost == "" || msfPassword == "" || msfUsername == "" {
-		log.Fatalln("[ERROR] Required environment variables (MSF_HOST, MSF_USERNAME, MSF_PASSWORD) not found!")
-	}
+	// if msfHost == "" || msfPassword == "" || msfUsername == "" {
+	// 	log.Fatalln("[ERROR] Required environment variables (MSF_HOST, MSF_USERNAME, MSF_PASSWORD) not found!")
+	// }
 
-	msf, err := metasploit.NewMsfClient(msfHost, msfUsername, msfPassword)
-	if err != nil {
-		log.Fatalf("[ERROR] Unable to create MSF client due to error: %s", err)
-	}
-	defer msf.Logout()
+	// msf, err := metasploit.NewMsfClient(msfHost, msfUsername, msfPassword)
+	// if err != nil {
+	// 	log.Fatalf("[ERROR] Unable to create MSF client due to error: %s", err)
+	// }
+	// defer msf.Logout()
 
-	sessions, err := msf.ListSessions()
-	if err != nil {
-		log.Panicf("[ERROR] Unable to list MSF sessions due to error: %s", err)
-	}
+	// sessions, err := msf.ListSessions()
+	// if err != nil {
+	// 	log.Panicf("[ERROR] Unable to list MSF sessions due to error: %s", err)
+	// }
 
-	if len(sessions) < 1 {
-		fmt.Println("[*] No active sessions found!")
-	} else {
-		fmt.Println("Sessions:")
-		for _, session := range sessions {
-			fmt.Printf("%5d\t%s\n", session.Id, session.Info)
+	// if len(sessions) < 1 {
+	// 	fmt.Println("[*] No active sessions found!")
+	// } else {
+	// 	fmt.Println("Sessions:")
+	// 	for _, session := range sessions {
+	// 		fmt.Printf("%5d\t%s\n", session.Id, session.Info)
+	// 	}
+	// }
+
+	// Bing Doc Search
+	var docLinks []string
+	site := "example.com"
+	docType := "xlsx"
+
+	bsClient := bing.NewBingSearch()
+	bsClient.SearchDocument(site, docType)
+
+	for _, result := range bsClient.Results {
+		docLink, ok := result.(string)
+		if !ok {
+			continue
 		}
+		docLinks = append(docLinks, docLink)
 	}
+
+	fmt.Printf("[*] Docs found: %d\n", len(docLinks))
+	bsClient.ExtractDocumentsMetaData(docLinks)
 }
