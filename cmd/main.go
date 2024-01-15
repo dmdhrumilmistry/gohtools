@@ -1,9 +1,11 @@
 package main
 
 import (
-	"fmt"
+	"net/http"
 
-	"github.com/dmdhrumilmistry/gohtools/bing"
+	ghttp "github.com/dmdhrumilmistry/gohtools/http"
+	"github.com/gorilla/mux"
+	"github.com/urfave/negroni"
 )
 
 func main() {
@@ -47,21 +49,44 @@ func main() {
 	// }
 
 	// Bing Doc Search
-	var docLinks []string
-	site := "example.com"
-	docType := "xlsx"
+	// var docLinks []string
+	// site := "example.com"
+	// docType := "xlsx"
 
-	bsClient := bing.NewBingSearch()
-	bsClient.SearchDocument(site, docType)
+	// bsClient := bing.NewBingSearch()
+	// bsClient.SearchDocument(site, docType)
 
-	for _, result := range bsClient.Results {
-		docLink, ok := result.(string)
-		if !ok {
-			continue
-		}
-		docLinks = append(docLinks, docLink)
-	}
+	// for _, result := range bsClient.Results {
+	// 	docLink, ok := result.(string)
+	// 	if !ok {
+	// 		continue
+	// 	}
+	// 	docLinks = append(docLinks, docLink)
+	// }
 
-	fmt.Printf("[*] Docs found: %d\n", len(docLinks))
-	bsClient.ExtractDocumentsMetaData(docLinks)
+	// fmt.Printf("[*] Docs found: %d\n", len(docLinks))
+	// bsClient.ExtractDocumentsMetaData(docLinks)
+
+	// Start Malicious Servers
+	// http.HandleFunc("/hello", ghttp.EchoParam)
+	// http.ListenAndServe("0.0.0.0:8000", nil) // use default server mux
+
+	// var router ghttp.Router
+	// http.ListenAndServe("0.0.0.0:8000", &router) // use custom router
+
+	// HTTP Middleware
+	// f := http.HandlerFunc(ghttp.EchoParam)
+	// l := ghttp.Logger{Handler: f}
+	// http.ListenAndServe("0.0.0.0:8000", &l)
+
+	// Middleware: Negroni and Handler: gorillaMux
+	r := mux.NewRouter()
+	n := negroni.Classic()
+	n.UseHandler(r)
+	n.Use(&ghttp.TrivialMiddleware{})
+
+	r.HandleFunc("/hello", ghttp.EchoParam).Methods("GET")
+	r.HandleFunc("/users/{user:[a-z]+}", ghttp.EchoUserParam).Methods("GET")
+
+	http.ListenAndServe("0.0.0.0:8000", n)
 }
