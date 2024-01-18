@@ -28,3 +28,4 @@ bin
 creds.txt
 credentials.txt
 public/*
+logger.js

