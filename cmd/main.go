@@ -1,9 +1,7 @@
 package main
 
 import (
-	"fmt"
-
-	"github.com/dmdhrumilmistry/gohtools/bing"
+	"github.com/dmdhrumilmistry/gohtools/http"
 )
 
 func main() {
@@ -47,21 +45,69 @@ func main() {
 	// }
 
 	// Bing Doc Search
-	var docLinks []string
-	site := "example.com"
-	docType := "xlsx"
+	// var docLinks []string
+	// site := "example.com"
+	// docType := "xlsx"
 
-	bsClient := bing.NewBingSearch()
-	bsClient.SearchDocument(site, docType)
+	// bsClient := bing.NewBingSearch()
+	// bsClient.SearchDocument(site, docType)
 
-	for _, result := range bsClient.Results {
-		docLink, ok := result.(string)
-		if !ok {
-			continue
-		}
-		docLinks = append(docLinks, docLink)
-	}
+	// for _, result := range bsClient.Results {
+	// 	docLink, ok := result.(string)
+	// 	if !ok {
+	// 		continue
+	// 	}
+	// 	docLinks = append(docLinks, docLink)
+	// }
 
-	fmt.Printf("[*] Docs found: %d\n", len(docLinks))
-	bsClient.ExtractDocumentsMetaData(docLinks)
+	// fmt.Printf("[*] Docs found: %d\n", len(docLinks))
+	// bsClient.ExtractDocumentsMetaData(docLinks)
+
+	// Start Malicious Servers
+	// http.HandleFunc("/hello", ghttp.EchoParam)
+	// http.ListenAndServe("0.0.0.0:8000", nil) // use default server mux
+
+	// var router ghttp.Router
+	// http.ListenAndServe("0.0.0.0:8000", &router) // use custom router
+
+	// HTTP Middleware
+	// f := http.HandlerFunc(ghttp.EchoParam)
+	// l := ghttp.Logger{Handler: f}
+	// http.ListenAndServe("0.0.0.0:8000", &l)
+
+	// Middleware: Negroni and Handler: gorillaMux
+	// r := mux.NewRouter()
+	// n := negroni.Classic()
+	// n.UseHandler(r)
+	// n.Use(&ghttp.TrivialMiddleware{})
+
+	// r.HandleFunc("/hello", ghttp.EchoParam).Methods("GET")
+	// r.HandleFunc("/users/{user:[a-z]+}", ghttp.EchoUserParam).Methods("GET")
+
+	// http.ListenAndServe("0.0.0.0:8000", n)
+
+	// Start Creds harvesting server
+	// filePath := "creds.txt"
+	// port := 8000
+	// captureUri := "/login"
+	// serverRootPath := "public"
+	// credsHarvestingServ := http.NewLoginHarvest(filePath, port, captureUri, serverRootPath)
+	// credsHarvestingServ.StartHarvesting()
+
+	// KeyLogger
+	// listenAddr := "localhost:8080"
+	// wsAddr := listenAddr
+	// jsTemplateFilePath := "logger.js"
+	// keyLogger := http.NewKeyLogger(listenAddr, wsAddr, jsTemplateFilePath)
+
+	// keyLogger.StartLogger()
+
+	// Malicious C2C server with Reverse Proxy/Virtual Hosts
+	proxies := make(map[string]string)
+	proxies["1.gohtools.com"] = "http://localhost:8001"
+	proxies["2.gohtools.com"] = "http://localhost:8002"
+
+	reverseProxy := http.NewReverseProxy("0.0.0.0:80", proxies)
+	reverseProxy.StartReverseProxy()
+
 }

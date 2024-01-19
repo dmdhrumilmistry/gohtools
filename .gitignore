@@ -23,3 +23,9 @@ go.work
 
 # ignore bin file
 bin
+
+# gohtools specific ignores
+creds.txt
+credentials.txt
+public/*
+logger.js
