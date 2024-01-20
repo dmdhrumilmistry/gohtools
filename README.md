@@ -4,6 +4,27 @@
 
 A collection of hacking tools written in golang!!
 
+## Tools
+
+-   DNS:
+    -   Server
+    -   Proxy
+    -   Subdomain Fuzzer
+-   HTTP:
+    -   Credential Harvesting Server
+    -   KeyLogger
+    -   HTTP client wrapper
+    -   Reverse Proxy
+-   Metasploit RPC API Wrapper (WIP)
+-   Bing Search Scraper
+-   Metadata Extractor
+
+## Install CLI Tools
+
+```bash
+go install github.com/dmdhrumilmistry/gohtools@latest
+```
+
 ## Install Package
 
 ```bash
