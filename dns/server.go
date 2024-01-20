@@ -52,7 +52,7 @@ func (s *DnsServer) StartDnsServer(network string) {
 		w.WriteMsg(&resp)
 	})
 
-	log.Printf("[*] Starting DNS server on %s://%s", network, *s.listenAddr)
+	log.Printf("[*] Starting DNS server on %s://%s\n", network, *s.listenAddr)
 	log.Fatalln(dns.ListenAndServe(*s.listenAddr, network, nil))
 
 	// dig @[SERVER_IP] [DOMAIN_NAME]

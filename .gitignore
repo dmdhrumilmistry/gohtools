@@ -29,3 +29,4 @@ creds.txt
 credentials.txt
 public/*
 logger.js
+proxies.yaml
