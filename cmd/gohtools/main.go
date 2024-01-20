@@ -114,9 +114,8 @@ func main() {
 
 	// DNS Server
 	dnsServer := "1.1.1.1"
-	domain := "microsoft.com"
-	wordlist := "/Users/apple/Downloads/web-subdomains.txt"
-	// wordlist := "/Users/apple/Downloads/test.txt"
+	domain := "example.com"
+	wordlist := "web-subdomains.txt"
 
 	dnsFuzzer := dns.NewDnsFuzzer(dnsServer, 100, wordlist)
 	results, err := dnsFuzzer.StartSubDomainFuzzer(domain)
