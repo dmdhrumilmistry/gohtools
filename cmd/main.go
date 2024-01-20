@@ -1,7 +1,9 @@
 package main
 
 import (
-	"github.com/dmdhrumilmistry/gohtools/http"
+	"log"
+
+	"github.com/dmdhrumilmistry/gohtools/dns"
 )
 
 func main() {
@@ -103,11 +105,24 @@ func main() {
 	// keyLogger.StartLogger()
 
 	// Malicious C2C server with Reverse Proxy/Virtual Hosts
-	proxies := make(map[string]string)
-	proxies["1.gohtools.com"] = "http://localhost:8001"
-	proxies["2.gohtools.com"] = "http://localhost:8002"
+	// proxies := make(map[string]string)
+	// proxies["1.gohtools.com"] = "http://localhost:8001"
+	// proxies["2.gohtools.com"] = "http://localhost:8002"
 
-	reverseProxy := http.NewReverseProxy("0.0.0.0:80", proxies)
-	reverseProxy.StartReverseProxy()
+	// reverseProxy := http.NewReverseProxy("0.0.0.0:80", proxies)
+	// reverseProxy.StartReverseProxy()
+
+	// DNS Server
+	dnsServer := "1.1.1.1"
+	domain := "microsoft.com"
+	wordlist := "/Users/apple/Downloads/web-subdomains.txt"
+	// wordlist := "/Users/apple/Downloads/test.txt"
+
+	dnsFuzzer := dns.NewDnsFuzzer(dnsServer, 100, wordlist)
+	results, err := dnsFuzzer.StartSubDomainFuzzer(domain)
+	if err != nil {
+		log.Printf("[!] Error occurred while fuzzing sub-domains: %s", err)
+	}
+	dnsFuzzer.PrintResults(results)
 
 }
