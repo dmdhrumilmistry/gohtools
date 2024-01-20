@@ -1,5 +1,8 @@
-build:
-	@go build -ldflags "-w -s" -o ./bin/gohtools -v cmd/main.go
+# build:
+# 	@go build -ldflags "-w -s" -o ./bin/gohtools -v cmd/gohtools/main.go
+
+install: 
+	@go install -v ./...
 
 run: test build
 	@./bin/gohtools
