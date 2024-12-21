@@ -8,7 +8,7 @@ require (
 	github.com/gorilla/mux v1.8.1
 	github.com/gorilla/websocket v1.5.1
 	github.com/miekg/dns v1.1.58
-	github.com/quic-go/quic-go v0.47.0
+	github.com/quic-go/quic-go v0.48.2
 	github.com/sirupsen/logrus v1.9.3
 	github.com/valyala/fasthttp v1.54.0
 	gopkg.in/vmihailenco/msgpack.v2 v2.9.2
