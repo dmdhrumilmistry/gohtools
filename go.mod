@@ -7,10 +7,12 @@ toolchain go1.23.4
 require (
 	github.com/PuerkitoBio/goquery v1.10.1
 	github.com/dmdhrumilmistry/fasthttpclient v1.2.3
+	github.com/google/gopacket v1.1.19
 	github.com/gorilla/mux v1.8.1
 	github.com/gorilla/websocket v1.5.3
 	github.com/miekg/dns v1.1.62
 	github.com/quic-go/quic-go v0.48.2
+	github.com/rs/zerolog v1.33.0
 	github.com/sirupsen/logrus v1.9.3
 	github.com/valyala/fasthttp v1.58.0
 	gopkg.in/vmihailenco/msgpack.v2 v2.9.2
@@ -29,9 +31,11 @@ require (
 	github.com/k0kubun/go-ansi v0.0.0-20180517002512-3bf9e2903213 // indirect
 	github.com/klauspost/compress v1.17.11 // indirect
 	github.com/li-jin-gou/http2curl v0.1.2 // indirect
+	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mitchellh/colorstring v0.0.0-20190213212951-d06e56a500db // indirect
 	github.com/onsi/ginkgo/v2 v2.22.2 // indirect
+	github.com/pkg/errors v0.9.1 // indirect
 	github.com/quic-go/qpack v0.5.1 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/schollz/progressbar/v3 v3.18.0 // indirect
