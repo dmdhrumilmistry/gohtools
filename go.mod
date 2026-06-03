@@ -11,7 +11,7 @@ require (
 	github.com/gorilla/mux v1.8.1
 	github.com/gorilla/websocket v1.5.3
 	github.com/miekg/dns v1.1.62
-	github.com/quic-go/quic-go v0.57.0
+	github.com/quic-go/quic-go v0.59.1
 	github.com/rs/zerolog v1.33.0
 	github.com/sirupsen/logrus v1.9.3
 	github.com/valyala/fasthttp v1.58.0
